@@ -40,18 +40,21 @@ task.spawn(function()
         for _,p in game.MaterialService:GetDescendants() do
             optimize(p)
         end
-        task.wait(1)
-    end
-end)
-task.spawn(function()
-    while true do
         local plr = game.Players.LocalPlayer
         if plr.Character and plr.Character:FindFirstChild("Animate") then
             plr.Character.Animate:Destroy()
         end
+        task.wait(0.1)
+    end
+end)
+task.spawn(function()
+    while true do
         for _,p in workspace:GetDescendants() do
+            if p:IsA("Humanoid") then
+                task.wait()
+            end
             anims(p)
         end
-        task.wait(0.1)
+        task.wait(1)
     end
 end)
