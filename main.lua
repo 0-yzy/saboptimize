@@ -10,6 +10,16 @@ function optimize(p)
         p.TextureId = ""
     end
 end
+function anims(p)
+    if p:IsA("Humanoid") then
+        local a = p:FindFirstChildOfClass("Animator")
+        if a then
+            for _, track in ipairs(a:GetPlayingAnimationTracks()) do
+                track:Stop()
+            end
+        end
+    end
+end
 task.spawn(function()
     while true do
         for _,p in game:GetDescendants() do
@@ -24,6 +34,18 @@ task.spawn(function()
             optimize(p)
         end
         task.wait(1)
+    end
+end)
+task.spawn(function()
+    while true do
+        local plr = game.Players.LocalPlayer
+        if plr.Character and plr.Character:FindFirstChild("Animate") then
+            plr.Character.Animate:Destroy()
+        end
+        for _,p in workspace:GetDescendants() do
+            anims(p)
+        end
+        task.wait(0.1)
     end
 end)
 local l = game.Lighting
