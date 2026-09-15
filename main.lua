@@ -22,15 +22,22 @@ function anims(p)
 end
 task.spawn(function()
     while true do
-        for _,p in game:GetDescendants() do
+        local l = game.Lighting
+        l.Ambient = Color3.fromRGB(255, 255, 255)
+        l.Brightness = 0
+        l.ColorShift_Bottom = Color3.fromRGB(0, 0, 0)
+        l.ColorShift_Top = Color3.fromRGB(0, 0, 0)
+        l.EnvironmentDiffuseScale = 0
+        l.EnvironmentSpecularScale = 0
+        l.GlobalShadows = false
+        l.Technology = Enum.Technology.Compatibility
+        for i,v in l:GetChildren() do
+            v:Destroy()
+        end
+        for _,p in workspace:GetDescendants() do
             optimize(p)
         end
-        task.wait(10)
-    end
-end)
-task.spawn(function()
-    while true do
-        for _,p in workspace:GetDescendants() do
+        for _,p in game.MaterialService:GetDescendants() do
             optimize(p)
         end
         task.wait(1)
@@ -48,15 +55,3 @@ task.spawn(function()
         task.wait(0.1)
     end
 end)
-local l = game.Lighting
-l.Ambient = Color3.fromRGB(255, 255, 255)
-l.Brightness = 0
-l.ColorShift_Bottom = Color3.fromRGB(0, 0, 0)
-l.ColorShift_Top = Color3.fromRGB(0, 0, 0)
-l.EnvironmentDiffuseScale = 0
-l.EnvironmentSpecularScale = 0
-l.GlobalShadows = false
-l.Technology = Enum.Technology.Compatibility
-for i,v in l:GetChildren() do
-    v:Destroy()
-end
